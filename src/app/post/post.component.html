@@ -1,5 +1,7 @@
-<div class="post">
-  <h2>Post title</h2>
+<div class="card">
+  <h2>{{post.title}}</h2>
+  <p>{{post.text}}</p>
 
-  <p>lorem ipsum</p>
+  <button class="btn" (click)="removePost()">&times;</button>
+  <ng-content></ng-content>
 </div>
