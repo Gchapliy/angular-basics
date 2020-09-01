@@ -1,25 +1,14 @@
 <div class="container">
   <h1>Angular Components</h1>
 
-  <h2>Subheader</h2>
-  <app-post-form
-    (add)="updatePosts($event)"
-  >
+  <p [appStyle]="'red'" [dStyles]="{border: '1px solid blue', borderRadius: '5px'}">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum, tempora?</p>
 
-  </app-post-form>
-
-  <hr/>
-
-  <app-post
-    *ngFor="let p of posts"
-    [post]="p"
-    (remove)="removePost($event)"
-  >
-    <div #info>
-      <small *ngIf="p.text.length > 10, else short">Post is long</small>
-      <ng-template #short>
-        <small>Post is short</small>
-      </ng-template>
-    </div>
-  </app-post>
+  <button class="btn" (click)="isVisible = !isVisible">Toggle</button>
+<!--  <div *ngIf="isVisible" class="wrap">-->
+<!--    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur corporis deserunt dolor eaque ex minima optio quisquam, ratione ullam velit!</p>-->
+<!--  </div>-->
+<!--  -->
+  <div *appIfnot="!isVisible" class="wrap">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur corporis deserunt dolor eaque ex minima optio quisquam, ratione ullam velit!</p>
+  </div>
 </div>
