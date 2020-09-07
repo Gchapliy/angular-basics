@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 
 export interface Post {
   title: string;
@@ -13,5 +13,4 @@ export interface Post {
 })
 export class AppComponent {
 
-  isVisible = true
 }

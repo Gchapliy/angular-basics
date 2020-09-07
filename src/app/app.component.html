@@ -1,14 +1,10 @@
 <div class="container">
   <h1>Angular Components</h1>
 
-  <p [appStyle]="'red'" [dStyles]="{border: '1px solid blue', borderRadius: '5px'}">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum, tempora?</p>
+  <app-post-form></app-post-form>
 
-  <button class="btn" (click)="isVisible = !isVisible">Toggle</button>
-<!--  <div *ngIf="isVisible" class="wrap">-->
-<!--    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur corporis deserunt dolor eaque ex minima optio quisquam, ratione ullam velit!</p>-->
-<!--  </div>-->
-<!--  -->
-  <div *appIfnot="!isVisible" class="wrap">
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur corporis deserunt dolor eaque ex minima optio quisquam, ratione ullam velit!</p>
-  </div>
+  <hr />
+
+  <app-post></app-post>
+  <app-post></app-post>
 </div>
