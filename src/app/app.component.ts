@@ -15,7 +15,7 @@ export class AppComponent implements OnInit{
 
   posts: Post[] = [
     {title: 'I want to learn Angular', text: 'I am still learning components', id: 1},
-   // {title: 'Next block', text: 'About directives', id: 2}
+    {title: 'Next block', text: 'About directives', id: 2}
   ];
 
   ngOnInit(): void {
