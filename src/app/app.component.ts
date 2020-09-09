@@ -1,10 +1,5 @@
 import {Component} from '@angular/core';
-import {Observable} from 'rxjs';
-
-export interface Post {
-  title: string;
-  text: string;
-}
+import {interval} from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -12,15 +7,11 @@ export interface Post {
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  p: Promise<string> = new Promise<string>(resolve => {
-    setTimeout(() => {
-      resolve('Promise Resolved');
-    }, 4000);
-  });
+  constructor() {
+    const intervalStream$ = interval(1000);
 
-  date: Observable<Date> = new Observable(obs => {
-    setInterval(() => {
-      obs.next(new Date());
-    }, 1000);
-  });
+    intervalStream$.subscribe((value) => {
+      console.log(value);
+    });
+  }
 }
