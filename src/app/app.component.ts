@@ -20,4 +20,10 @@ export class AppComponent {
     {title: 'Javascript', text: 'The worst lang in the world'},
   ];
 
+  addPost(): void{
+    this.posts.unshift({
+      title: 'Angular 8',
+      text: 'Angular 8 course'
+    });
+  }
 }
