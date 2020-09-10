@@ -1,16 +1,14 @@
-import {Component, OnInit} from '@angular/core';
-import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
-import {MyValidators} from './my.validators';
+import {Component, OnInit} from '@angular/core'
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
-  appState = 'on';
+export class AppComponent implements OnInit {
 
-  handleChange(): void {
-    console.log(this.appState);
+  ngOnInit() {
+
   }
 }
+
