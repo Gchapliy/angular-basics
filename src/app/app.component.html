@@ -17,6 +17,9 @@
         <small *ngIf="form.get('email').errors.restrictedEmail">
           Email {{form.get('email').value}} is restricted
         </small>
+        <small *ngIf="form.get('email').errors.uniqEmail">
+          Email {{form.get('email').value}} is not free
+        </small>
       </div>
     </div>
 
