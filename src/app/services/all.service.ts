@@ -32,4 +32,10 @@ export class AllService {
     return this.http.get<Todo[]>('https://jsonplaceholder.typicode.com/todos?_limit=2')
       .pipe(delay(500));
   }
+
+  completeTodo(id: number): Observable<Post> {
+    return this.http.put<Post>(`https://jsonplaceholder.typicode.com/posts/${id}`, {
+      body: 'true'
+    });
+  }
 }
