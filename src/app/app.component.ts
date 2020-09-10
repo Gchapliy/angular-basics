@@ -16,6 +16,7 @@ export class AppComponent implements OnInit {
   loading = false;
 
   todoTitle = '';
+  error = '';
 
   constructor(private allService: AllService) {
   }
@@ -56,6 +57,9 @@ export class AppComponent implements OnInit {
       .subscribe(todos => {
         this.todos = todos;
         this.loading = false;
+      }, error => {
+        console.log(error.message);
+        this.error = error.message;
       });
   }
 
@@ -66,10 +70,10 @@ export class AppComponent implements OnInit {
       });
   }
 
-  completeTodo(id: number): void{
+  completeTodo(id: number): void {
     this.allService.completeTodo(id)
       .subscribe(post => {
-        this.todos.find( t => t.id === post.userId).completed = true;
+        this.todos.find(t => t.id === post.userId).completed = true;
       });
   }
 }
