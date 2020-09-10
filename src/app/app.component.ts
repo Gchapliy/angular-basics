@@ -1,18 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {delay} from 'rxjs/operators';
-
-export interface Todo {
-  completed: boolean;
-  title: string;
-  id?: number;
-}
-
-export interface Post {
-  userId: number;
-  title: string;
-  body: string;
-}
+import {Post, Todo, AllService} from './services/all.service';
 
 @Component({
   selector: 'app-root',
@@ -22,16 +11,31 @@ export interface Post {
 export class AppComponent implements OnInit {
 
   todos: Todo[] = [];
+  posts: Post[] = [];
 
   loading = false;
 
   todoTitle = '';
 
-  constructor(private http: HttpClient) {
+  constructor(private allService: AllService) {
   }
 
   ngOnInit(): void {
     this.fetchTodos();
+  }
+
+  addPost(): void {
+    this.allService.addPost({
+      userId: 1,
+      title: this.todoTitle,
+      body: 'BODY'
+    })
+      .subscribe(post => {
+          console.log('post', post);
+          this.posts.push(post);
+          this.todoTitle = '';
+        }
+      );
   }
 
   addTodo(): void {
@@ -39,29 +43,16 @@ export class AppComponent implements OnInit {
       return;
     }
 
-    const newTodo: Todo = {
+    this.todos.unshift({
+      id: 1,
       title: this.todoTitle,
       completed: false
-    };
-
-    const newPost: Post = {
-      userId: 1,
-      title: this.todoTitle,
-      body: 'BODY'
-    };
-
-    this.http.post('https://jsonplaceholder.typicode.com/posts', newPost)
-      .subscribe(post => {
-          console.log('post', post);
-          this.todoTitle = '';
-        }
-      );
+    });
   }
 
   fetchTodos(): void {
     this.loading = true;
-    this.http.get<Todo[]>('https://jsonplaceholder.typicode.com/todos?_limit=2')
-      .pipe(delay(1500))
+    this.allService.fetchTodos()
       .subscribe(todos => {
         this.todos = todos;
         this.loading = false;
@@ -69,7 +60,7 @@ export class AppComponent implements OnInit {
   }
 
   removeTodo(id: number): void {
-    this.http.delete<void>(`https://jsonplaceholder.typicode.com/todos/${id}`)
+    this.allService.removePost(id)
       .subscribe(res => {
         this.todos = this.todos.filter(f => f.id !== id);
       });
