@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {catchError, delay} from 'rxjs/operators';
 
@@ -21,7 +21,12 @@ export class AllService {
   }
 
   addPost(post: Post): Observable<Post> {
-    return this.http.post<Post>('https://jsonplaceholder.typicode.com/posts', post);
+    const headers = new HttpHeaders({
+      'MyCustomHeader': Math.random().toString()
+    });
+    return this.http.post<Post>('https://jsonplaceholder.typicode.com/posts', post, {
+      headers
+    });
   }
 
   removePost(id: number): Observable<void> {
@@ -29,7 +34,7 @@ export class AllService {
   }
 
   fetchTodos(): Observable<Todo[]> {
-    return this.http.get<Todo[]>('https://jsonplaceholder.typicode.com/todoss?_limit=2')
+    return this.http.get<Todo[]>('https://jsonplaceholder.typicode.com/todos?_limit=2')
       .pipe(
         delay(500),
         catchError(err => {

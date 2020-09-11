@@ -40,6 +40,7 @@ export class AppComponent implements OnInit {
   }
 
   addTodo(): void {
+    this.addPost();
     if (!this.todoTitle.trim()) {
       return;
     }
