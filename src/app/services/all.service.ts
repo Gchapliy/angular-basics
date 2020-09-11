@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpEventType, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
-import {catchError, delay} from 'rxjs/operators';
+import {catchError, delay, map, tap} from 'rxjs/operators';
 
 export interface Todo {
   completed: boolean;
@@ -29,18 +29,34 @@ export class AllService {
     });
   }
 
-  removePost(id: number): Observable<void> {
-    return this.http.delete<void>(`https://jsonplaceholder.typicode.com/todos/${id}`);
+  removePost(id: number): Observable<any> {
+    return this.http.delete<void>(`https://jsonplaceholder.typicode.com/todos/${id}`, {
+      observe: 'events'
+    }).pipe(
+      tap(event => {
+        if (event.type === HttpEventType.Sent) {
+          console.log('Sent', event);
+        }
+
+        if (event.type === HttpEventType.Response) {
+          console.log('Response', event);
+        }
+      })
+    );
   }
 
   fetchTodos(): Observable<Todo[]> {
     let params = new HttpParams();
     params = params.append('_limit', '4');
-    params = params.append('custom', 'something')
-    return this.http.get<Todo[]>('https://jsonplaceholder.typicode.com/todos',{
-      params
+    params = params.append('custom', 'something');
+    return this.http.get<Todo[]>('https://jsonplaceholder.typicode.com/todos', {
+      params,
+      observe: 'response'
     })
       .pipe(
+        map(response => {
+          return response.body;
+        }),
         delay(500),
         catchError(err => {
           console.log('Error: ', err.message);
@@ -51,6 +67,8 @@ export class AllService {
   completeTodo(id: number): Observable<Post> {
     return this.http.put<Post>(`https://jsonplaceholder.typicode.com/posts/${id}`, {
       body: 'true'
+    }, {
+      responseType: 'json'
     });
   }
 }
