@@ -1,9 +1,10 @@
 import {CounterComponent} from './counter.component';
+import {FormBuilder} from '@angular/forms';
 
 describe('CounterComponent', () => {
   let component;
   beforeEach(() => {
-    component = new CounterComponent();
+    component = new CounterComponent(new FormBuilder());
   });
 
   it('should incement counter by 1', () => {
@@ -21,5 +22,18 @@ describe('CounterComponent', () => {
     component.increment();
 
     expect(result).toBe(1);
+  });
+
+  it('should create form with 2 controls', () => {
+    expect(component.form.contains('login')).toBeTruthy();
+    expect(component.form.contains('email')).toBeTruthy();
+  });
+
+  it('should mark login as invalid if empty value', function() {
+    const control = component.form.get('login');
+
+    control.setValue('');
+
+    expect(control.valid).toBeFalsy();
   });
 });
