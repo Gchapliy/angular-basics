@@ -1,8 +1,7 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {RoutingComponent} from './routing.component';
-import {Observable, Subject} from 'rxjs';
-import {ActivatedRoute, Params, Router, RouterOutlet} from '@angular/router';
+import {Subject} from "rxjs";
+import {ActivatedRoute, Params, Router, RouterOutlet} from "@angular/router";
 import {By} from "@angular/platform-browser";
 import {RouterTestingModule} from "@angular/router/testing";
 import {NO_ERRORS_SCHEMA} from "@angular/core";
@@ -13,17 +12,15 @@ class RouterStub {
 }
 
 class ActivatedRouteStub {
-  private subject = new Subject();
+  private subject = new Subject<Params>()
 
   push(params: Params) {
-    this.subject.next(params);
+    this.subject.next(params)
   }
 
   get params() {
-    return this.subject.asObservable();
+    return this.subject.asObservable()
   }
-
-  //params: Observable<Params>;
 }
 
 describe('RoutingComponent', () => {
@@ -32,46 +29,46 @@ describe('RoutingComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [RoutingComponent],
-      imports: [RouterTestingModule],
+      declarations: [ RoutingComponent ],
+      imports: [ RouterTestingModule ],
       providers: [
         {provide: Router, useClass: RouterStub},
-        {provide: ActivatedRoute, useClass: ActivatedRouteStub},
+        {provide: ActivatedRoute, useClass: ActivatedRouteStub}
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    });
+      schemas: [ NO_ERRORS_SCHEMA ]
+    })
 
     fixture = TestBed.createComponent(RoutingComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    fixture.detectChanges()
   });
 
   it('should be defined', () => {
     expect(component).toBeDefined();
   });
 
-  it('should navigate to posts if go back', function () {
-    let router = TestBed.get(Router);
-    let spy = spyOn(router, 'navigate');
+  it('should navigate to posts if go back', () => {
+    let router = TestBed.get(Router)
+    let spy = spyOn(router, 'navigate')
 
-    component.goBack();
+    component.goBack()
 
-    expect(spy).toHaveBeenCalledWith(['/posts']);
-  });
+    expect(spy).toHaveBeenCalledWith(['/posts'])
+  })
 
-  it('should navigate to 404 if id = 0', function () {
-    let router = TestBed.get(Router);
-    let route: ActivatedRouteStub = TestBed.get(ActivatedRoute);
-    let spy = spyOn(router, 'navigate');
+  it('should navigate to 404 if id = 0', () => {
+    let router = TestBed.get(Router)
+    let route: ActivatedRouteStub = TestBed.get(ActivatedRoute)
+    let spy = spyOn(router, 'navigate')
 
-    route.push({id: '0'});
+    route.push({id: '0'})
 
-    expect(spy).toHaveBeenCalledWith(['/404']);
-  });
+    expect(spy).toHaveBeenCalledWith(['/404'])
+  })
 
-  it('should have router-outlet directive', function () {
+  it('should have router-outlet directive', () => {
     let de = fixture.debugElement.query(By.directive(RouterOutlet))
 
-    expect(de).not.toBeNull();
-  });
+    expect(de).not.toBeNull()
+  })
 });
