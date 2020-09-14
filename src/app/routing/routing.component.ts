@@ -23,7 +23,7 @@ export class RoutingComponent implements OnInit {
   }
 
   goBack() {
-    this.route.navigate(['/posts']);
+    this.router.navigate(['/posts']);
   }
 
 }
