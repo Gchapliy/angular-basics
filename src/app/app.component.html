@@ -4,13 +4,14 @@
 <hr/>
 
 <div class="wrap">
-  <div
-    class="box"
-    *ngIf="visible"
-    [@box]="boxState"
-    (@box.start)="animationStarted($event)"
-    (@box.done)="animationDone($event)"
-  >
-    <h4>{{boxState | uppercase}}</h4>
-  </div>
+  <app-animate></app-animate>
+<!--  <div-->
+<!--    class="box"-->
+<!--    *ngIf="visible"-->
+<!--    [@box]="boxState"-->
+<!--    (@box.start)="animationStarted($event)"-->
+<!--    (@box.done)="animationDone($event)"-->
+<!--  >-->
+<!--    <h4>{{boxState | uppercase}}</h4>-->
+<!--  </div>-->
 </div>
